@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService{
 		return dao.findOne(id);
 	}
 
+	@Override
+	public List<String> getAllPosts(int userId) {
+		// TODO Auto-generated method stub
+		return dao.getAllPosts(userId);
+	}
+
 }

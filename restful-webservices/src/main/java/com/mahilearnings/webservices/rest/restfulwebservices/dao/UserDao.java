@@ -12,4 +12,8 @@ public interface UserDao {
 	
 	public User findOne(int id);
 
+	public List<String> getAllPosts(int userId);
+	
+	public String getPost(int userId, int postId);
+
 }

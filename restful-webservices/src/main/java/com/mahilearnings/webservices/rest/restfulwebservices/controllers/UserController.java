@@ -44,5 +44,11 @@ public class UserController {
 		
 		return ResponseEntity.created(location).build();
 	}
-
+	
+	@GetMapping(path="/users/{userId}/posts")
+    public List<String> findAllPosts(@PathVariable int userId){
+		List<String> posts=null;
+		posts = service.getAllPosts(userId);
+		return posts;
+	}
 }

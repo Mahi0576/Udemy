@@ -11,5 +11,7 @@ public interface UserService {
 	public User save(User user); 
 	
 	public User findOne(int id);
+
+	public List<String> getAllPosts(int userId);
 	
 }
