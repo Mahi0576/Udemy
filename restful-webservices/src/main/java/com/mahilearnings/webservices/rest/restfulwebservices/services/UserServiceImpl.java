@@ -1,6 +1,7 @@
 package com.mahilearnings.webservices.rest.restfulwebservices.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,27 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<String> getAllPosts(int userId) {
+	public Map<Integer, String> getAllPosts(int userId) {
 		// TODO Auto-generated method stub
 		return dao.getAllPosts(userId);
+	}
+
+	@Override
+	public Map<Integer, String> findUserPost(int userId, int postId) {
+		// TODO Auto-generated method stub
+		return dao.findUserPost(userId, postId);
+	}
+
+	@Override
+	public Map<Integer, String> saveUserPost(int userId, String post) {
+		// TODO Auto-generated method stub
+		return dao.saveUserPost(userId, post);
+	}
+
+	@Override
+	public User deleteUser(int id) {
+		// TODO Auto-generated method stub
+		return dao.deleteUser(id);
 	}
 
 }

@@ -2,9 +2,10 @@ package com.mahilearnings.webservices.rest.restfulwebservices.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,9 @@ public class UserDaoImpl implements UserDao{
 	
 	static{
 		list = new ArrayList();
-		list.add(new User(++userCount, "Mahi", new Date()));
+		User user = new User(++userCount, "Mahi", new Date());
+		user.savePost("This is my First Post..");
+		list.add(user);
 		list.add(new User(++userCount, "Chintu", new Date()));
 		list.add(new User(++userCount, "Vishu", new Date()));
 	}
@@ -50,21 +53,22 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public List<String> getAllPosts(int userId) {
+	public Map<Integer, String> getAllPosts(int userId) {
 		// TODO Auto-generated method stub
-		List<String> postsList = null;
+		//List<String> postsList = null;
+		Map<Integer, String> posts = null;
 		for(User user : list){
 			if(user.getId() == userId){
-				Map<Integer, String> posts = user.getPosts();
-				if(!posts.isEmpty()){
-					postsList = new ArrayList<String>();
+				posts = user.getPosts();
+				/*if(!posts.isEmpty()){
+					//postsList = new ArrayList<String>();
 					for(Map.Entry<Integer,String> set : posts.entrySet()){
 						postsList.add(set.getValue());
 					}
-				}
+				}*/
 			}
 		}
-		return postsList;
+		return posts;
 	}
 	
 	@Override
@@ -80,5 +84,36 @@ public class UserDaoImpl implements UserDao{
 			}
 		}
 		return post;
+	}
+
+	@Override
+	public Map<Integer, String> findUserPost(int userId, int postId) {
+		// TODO Auto-generated method stub
+		Map<Integer, String> result = new HashMap<Integer, String>();
+		User user = list.get(userId-1);
+		result.put(postId, user.getPosts().get(postId));
+		return result;
+	}
+
+	@Override
+	public Map<Integer, String> saveUserPost(int userId, String post) {
+		// TODO Auto-generated method stub
+		User user = list.get(userId-1);
+		return user.savePost(post);
+		
+	}
+
+	@Override
+	public User deleteUser(int id) {
+		// TODO Auto-generated method stub
+		Iterator itr = list.iterator();
+		while(itr.hasNext()){
+			User user  = (User) itr.next();
+			if(id == user.getId()){
+				itr.remove();
+				return user;
+			}
+		}
+		return null;
 	}
 }

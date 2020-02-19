@@ -7,13 +7,18 @@ import java.util.Map;
 public class User {
 	
 	private Integer id;
+	
+	//@Size(min=2)
 	private String name;
+	
+	//@Past
 	private Date birthDate;
+	
 	private Map<Integer, String> posts;
 	int numPosts = 0;
 	
 	protected User(){
-		
+		//Map<Integer, String> posts = new HashMap<Integer, String>();
 	}
 	
 	public User(Integer id, String name, Date birthDate) {
@@ -21,7 +26,7 @@ public class User {
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
-		Map<Integer, String> posts = new HashMap<Integer, String>();
+		 posts = new HashMap<Integer, String>();
 	}
 
 	public Integer getId() {
@@ -52,8 +57,11 @@ public class User {
 		return posts;
 	}
 
-	public void savePost(String post) {
+	public HashMap<Integer, String> savePost(String post) {
 		this.posts.put(++numPosts, post);
+		HashMap<Integer, String> res = new HashMap<Integer, String>();
+		res.put(numPosts, post);
+		return res;
 	}
 
 	@Override
@@ -61,6 +69,4 @@ public class User {
 		return "User [id=" + id + ", name=" + name + ", birthDate=" + birthDate.toString() + ", posts=" + posts.toString() + "]";
 	}
 	
-	
-
 }

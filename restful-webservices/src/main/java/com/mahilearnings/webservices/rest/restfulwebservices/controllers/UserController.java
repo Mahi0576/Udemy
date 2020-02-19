@@ -2,9 +2,11 @@ package com.mahilearnings.webservices.rest.restfulwebservices.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,7 @@ public class UserController {
 	}
 
 	@PostMapping(path="/users")
-	public ResponseEntity<Object> saveUser(@RequestBody User user ){
+	public ResponseEntity<Object> saveUser( @RequestBody User user ){
 		
 		// return service.save(user);
 		User savedUser = service.save(user);
@@ -46,9 +48,30 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/users/{userId}/posts")
-    public List<String> findAllPosts(@PathVariable int userId){
-		List<String> posts=null;
+    public Map<Integer, String> findAllPosts(@PathVariable int userId){
+		Map<Integer, String> posts=null;
 		posts = service.getAllPosts(userId);
 		return posts;
+	}
+	
+	@GetMapping(path="/users/{userId}/posts/{postId}")
+    public Map<Integer, String> findUserPost(@PathVariable int userId, @PathVariable int postId){
+		Map<Integer, String> post=null;
+		post = service.findUserPost(userId, postId);
+		return post;
+	}
+	
+	@PostMapping(path="/users/{userId}/posts")
+    public Map<Integer, String> saveUserPost(@PathVariable int userId, @PathVariable String post){
+		Map<Integer, String> result=null;
+		result = service.saveUserPost(userId, post);
+		return result;
+	}
+	
+	@DeleteMapping(path="users/{userId}")
+	public void deleteUser(@PathVariable int userId){
+		User user = service.deleteUser(userId);
+		if(user == null)
+			throw new UserNotFoundException("id-"+userId);
 	}
 }
