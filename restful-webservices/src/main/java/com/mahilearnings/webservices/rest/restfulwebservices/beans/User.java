@@ -4,14 +4,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description="All details of the user")
 public class User {
 	
 	private Integer id;
 	
-	//@Size(min=2)
+	@Size(min=2, message="Name should have atleast two characters")
+	@ApiModelProperty(notes="Name should have atleast two characters")
 	private String name;
 	
-	//@Past
+	@Past
+	@ApiModelProperty(notes="Birth date can't be future date")
 	private Date birthDate;
 	
 	private Map<Integer, String> posts;
